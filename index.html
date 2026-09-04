@@ -134,6 +134,14 @@
   }
   .state-sub{font-size:14px; color:var(--bronze); max-width:300px; line-height:1.6;}
 
+
+  /* Màn hình chào — hero branding */
+  .welcome-corner{width:30px; height:30px; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); margin:0 auto 26px;}
+  .welcome-wordmark{font-weight:800; font-size:30px; letter-spacing:0.2em; color:var(--espresso); text-transform:uppercase; margin:0 0 8px;}
+  .welcome-subtitle{font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin:0 0 18px;}
+  .welcome-tagline{font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-weight:500; font-size:20px; line-height:1.5; color:var(--bronze); max-width:300px; margin:0 0 30px;}
+  .welcome-meta{display:flex; gap:28px; justify-content:center; padding-top:20px; margin-bottom:32px; border-top:1px solid var(--stone);}
+  .welcome-start-btn{max-width:320px; margin-left:auto; margin-right:auto;}
   #formScreen{display:none;}
   #formScreen.show{display:block;}
 </style>
@@ -160,6 +168,25 @@
     <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="#997045" stroke-width="1.4"/><path d="M16 27l7 7 13-15" fill="none" stroke="#997045" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <p class="state-title">Cảm ơn Anh/Chị đã dành thời gian</p>
     <p class="state-sub">Ý kiến của Anh/Chị đã được ghi nhận và sẽ giúp Ban Quản Lý cải thiện dịch vụ tại tòa nhà.</p>
+  </div>
+
+  <!-- Chào mừng -->
+  <div id="welcomeScreen" class="state-screen">
+    <div class="welcome-corner"></div>
+    <p class="welcome-wordmark">L'MAK 68</p>
+    <p class="welcome-subtitle">Khảo sát chất lượng dịch vụ</p>
+    <p class="welcome-tagline">Ý kiến của Anh/Chị giúp chúng tôi hoàn thiện dịch vụ mỗi ngày.</p>
+    <div class="welcome-meta">
+      <div class="meta-item">
+        <div class="k">Tòa nhà</div>
+        <div class="v" id="welcomeBuildingName">L'MAK 68</div>
+      </div>
+      <div class="meta-item">
+        <div class="k">Đợt khảo sát</div>
+        <div class="v" id="welcomeRoundName">—</div>
+      </div>
+    </div>
+    <button type="button" class="submit-btn welcome-start-btn" id="startSurveyBtn">Bắt đầu khảo sát</button>
   </div>
 
   <!-- Form khảo sát -->
@@ -238,7 +265,7 @@ const STAR_SVG = '<svg viewBox="0 0 24 24"><path class="stroke" d="M12 17.27L18.
 const state = { ratings: {}, roundId: null, roundName: null };
 
 function showScreen(id){
-  ['loadingScreen','closedScreen','thankyouScreen'].forEach(s=>{
+  ['loadingScreen','closedScreen','thankyouScreen','welcomeScreen'].forEach(s=>{
     document.getElementById(s).classList.toggle('show', s===id);
   });
   document.getElementById('formScreen').classList.toggle('show', id==='formScreen');
@@ -327,7 +354,9 @@ async function loadActiveRound(){
     state.roundName = data.round_name;
     document.getElementById('buildingName').textContent = data.building_name;
     document.getElementById('roundName').textContent = data.round_name;
-    showScreen('formScreen');
+    document.getElementById('welcomeBuildingName').textContent = data.building_name;
+    document.getElementById('welcomeRoundName').textContent = data.round_name;
+    showScreen('welcomeScreen');
   }catch(err){
     document.getElementById('closedTitle').textContent = 'Không thể tải khảo sát';
     document.getElementById('closedSub').textContent = 'Vui lòng kiểm tra kết nối mạng và thử quét lại mã QR. (' + err.message + ')';
@@ -367,6 +396,7 @@ buildQuestions();
 initAnonymousToggle();
 initFeedbackCounter();
 document.getElementById('surveyForm').addEventListener('submit', handleSubmit);
+document.getElementById('startSurveyBtn').addEventListener('click', ()=> showScreen('formScreen'));
 loadActiveRound();
 </script>
 </body>
