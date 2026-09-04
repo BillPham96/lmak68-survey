@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản trị khảo sát — L'MAK 68</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#997045; --bronze:#8E624B; --espresso:#5B412A;
+    --champagne:#C9A86A; --sand:#E8D5A8; --ivory:#F5EBD7;
+    --navy:#1F2D3D; --pearl:#FAFAF7; --stone:#D6D2C8; --charcoal:#2C2A26;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--pearl); color:var(--charcoal); font-family:'Montserrat',Arial,sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+
+  /* ---------- Login ---------- */
+  #loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .login-card{width:100%; max-width:340px; text-align:center;}
+  .login-card .corner{width:20px; height:20px; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); margin:0 auto 18px;}
+  .login-card h1{font-size:13px; letter-spacing:0.28em; text-transform:uppercase; color:var(--espresso); margin:0 0 6px;}
+  .login-card p.sub{font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--bronze); font-size:18px; margin:0 0 28px;}
+  .login-card input{width:100%; padding:13px 14px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:14px; margin-bottom:12px;}
+  .login-card button{width:100%; padding:14px; border:none; background:var(--espresso); color:var(--ivory); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:13px; border-radius:2px; cursor:pointer;}
+  .login-err{color:#8a3b2b; font-size:12.5px; margin-top:10px; min-height:16px;}
+
+  /* ---------- Shell ---------- */
+  #app{display:none;}
+  #app.show{display:block;}
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; border-bottom:1px solid var(--stone); background:var(--pearl);
+    position:sticky; top:0; z-index:10;
+  }
+  .topbar .brand{display:flex; align-items:center; gap:10px;}
+  .topbar .brand .corner{width:14px;height:14px;border-top:1.5px solid var(--gold);border-left:1.5px solid var(--gold);}
+  .topbar h1{font-size:13px; letter-spacing:0.2em; text-transform:uppercase; margin:0; color:var(--espresso);}
+  .topbar .actions{display:flex; align-items:center; gap:14px;}
+  .pill{font-size:11px; letter-spacing:0.05em; padding:5px 11px; border-radius:20px; font-weight:600;}
+  .pill.open{background:#e5efe6; color:#3c6b45;}
+  .pill.closed{background:var(--sand); color:var(--bronze);}
+  .logout-btn{background:none; border:1px solid var(--stone); padding:7px 14px; border-radius:2px; font-family:inherit; font-size:12px; cursor:pointer; color:var(--charcoal);}
+
+  main{max-width:1080px; margin:0 auto; padding:28px 24px 80px;}
+  section{margin-bottom:44px;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px;}
+  .section-head h2{font-size:14px; letter-spacing:0.1em; text-transform:uppercase; color:var(--espresso); margin:0;}
+
+  .btn{padding:10px 18px; border-radius:2px; border:none; font-family:inherit; font-size:12.5px; font-weight:700; letter-spacing:0.05em; cursor:pointer;}
+  .btn-primary{background:var(--gold); color:var(--pearl);}
+  .btn-outline{background:none; border:1px solid var(--stone); color:var(--charcoal);}
+  .btn-danger-outline{background:none; border:1px solid var(--stone); color:var(--bronze);}
+
+  /* KPI cards */
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:30px;}
+  .kpi-card{background:var(--ivory); padding:18px 20px; border-radius:2px;}
+  .kpi-card .num{font-size:28px; font-weight:700; color:var(--espresso);}
+  .kpi-card .lbl{font-size:11px; letter-spacing:0.06em; color:var(--bronze); text-transform:uppercase; margin-top:4px;}
+
+  /* Rounds table */
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{text-align:left; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--bronze); padding:10px 12px; border-bottom:1px solid var(--stone);}
+  td{padding:11px 12px; border-bottom:1px solid var(--stone); vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .card{background:#fff; border:1px solid var(--stone); border-radius:2px;}
+
+  .new-round-form{display:none; gap:10px; padding:16px; background:var(--ivory); border-radius:2px; margin-bottom:16px; flex-wrap:wrap; align-items:flex-end;}
+  .new-round-form.show{display:flex;}
+  .new-round-form .field{display:flex; flex-direction:column; gap:5px;}
+  .new-round-form label{font-size:10.5px; color:var(--bronze); text-transform:uppercase; letter-spacing:0.05em;}
+  .new-round-form input{padding:9px 10px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:13px;}
+
+  .qr-box{display:flex; gap:20px; align-items:center; padding:18px; background:var(--ivory); border-radius:2px; margin-top:16px; flex-wrap:wrap;}
+  .qr-box img{width:120px; height:120px; background:#fff; border-radius:2px;}
+  .qr-box .link-text{font-size:12.5px; color:var(--bronze); word-break:break-all; max-width:360px;}
+  .qr-box .copy-btn{margin-top:8px;}
+
+  /* Filters */
+  .filters{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
+  .filters select, .filters input{padding:9px 11px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12.5px; background:#fff;}
+
+  /* Charts */
+  .chart-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:800px){ .chart-row{grid-template-columns:1fr;} }
+  .chart-card{background:#fff; border:1px solid var(--stone); border-radius:2px; padding:20px;}
+  .chart-card h3{font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--bronze); margin:0 0 16px;}
+
+  .status-select{padding:6px 8px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12px; background:#fff;}
+  .flag-chip{display:inline-block; width:7px; height:7px; border-radius:50%; background:#b5493a; margin-right:6px;}
+  .muted{color:var(--stone);}
+  .empty-note{padding:24px; text-align:center; color:var(--bronze); font-size:13px;}
+  footer.brandfoot{text-align:center; font-size:10px; letter-spacing:0.16em; color:var(--stone); text-transform:uppercase; padding:30px 0;}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="corner"></div>
+    <h1>L'MAK 68 — Quản trị</h1>
+    <p class="sub">Khảo sát chất lượng dịch vụ</p>
+    <input type="password" id="pwInput" placeholder="Mật khẩu quản trị" autocomplete="current-password">
+    <button id="loginBtn">Đăng nhập</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="corner"></div>
+      <h1>L'MAK 68 · Quản trị khảo sát</h1>
+    </div>
+    <div class="actions">
+      <span class="pill" id="statusPill">—</span>
+      <button class="logout-btn" id="logoutBtn">Đăng xuất</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="kpis" id="kpiRow"></div>
+
+    <!-- ĐỢT KHẢO SÁT -->
+    <section>
+      <div class="section-head">
+        <h2>Đợt khảo sát</h2>
+        <button class="btn btn-primary" id="toggleNewRound">+ Tạo đợt mới</button>
+      </div>
+
+      <div class="new-round-form" id="newRoundForm">
+        <div class="field"><label>Tên đợt</label><input type="text" id="roundNameInput" placeholder="VD: Quý 3/2026"></div>
+        <div class="field"><label>Bắt đầu</label><input type="date" id="roundStartInput"></div>
+        <div class="field"><label>Kết thúc</label><input type="date" id="roundEndInput"></div>
+        <button class="btn btn-primary" id="createRoundBtn">Tạo & mở đợt</button>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>Đợt</th><th>Thời gian</th><th>Trạng thái</th><th>Phản hồi</th><th>Điểm TB</th><th>Cần theo dõi</th><th></th></tr></thead>
+          <tbody id="roundsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="qr-box">
+        <img id="qrImg" alt="QR liên kết khảo sát">
+        <div>
+          <div style="font-size:11px;letter-spacing:.06em;color:var(--bronze);text-transform:uppercase;margin-bottom:6px;">Liên kết khảo sát (dùng chung cho mọi đợt)</div>
+          <div class="link-text" id="formLinkText"></div>
+          <button class="btn btn-outline copy-btn" id="copyLinkBtn">Sao chép liên kết</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BỘ LỌC -->
+    <section>
+      <div class="section-head"><h2>Bộ lọc</h2></div>
+      <div class="filters">
+        <select id="filterRound"></select>
+        <select id="filterAnon">
+          <option value="">Tất cả — ẩn danh &amp; định danh</option>
+          <option value="false">Chỉ có định danh</option>
+          <option value="true">Chỉ ẩn danh</option>
+        </select>
+        <input type="date" id="filterFrom">
+        <input type="date" id="filterTo">
+      </div>
+    </section>
+
+    <!-- BIỂU ĐỒ -->
+    <section>
+      <div class="section-head"><h2>Điểm đánh giá</h2></div>
+      <div class="chart-row">
+        <div class="chart-card">
+          <h3>Điểm trung bình theo hạng mục (theo bộ lọc)</h3>
+          <div id="barChart"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Xu hướng điểm tổng theo đợt khảo sát</h3>
+          <div id="lineChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CẦN THEO DÕI -->
+    <section>
+      <div class="section-head"><h2>Cần theo dõi (điểm ≤ 2 sao ở ít nhất 1 hạng mục)</h2></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Mã</th><th>Ngày gửi</th><th>Đợt</th><th>Người trả lời</th><th>Điểm TB</th><th>Trạng thái xử lý</th></tr></thead>
+          <tbody id="flaggedBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TẤT CẢ PHẢN HỒI -->
+    <section>
+      <div class="section-head"><h2>Tất cả phản hồi (theo bộ lọc)</h2></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Mã</th><th>Ngày gửi</th><th>Đợt</th><th>Người trả lời</th><th>Điểm TB</th><th>Góp ý</th></tr></thead>
+          <tbody id="allBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="brandfoot">L'MAK Investment Corporation · Ho Chi Minh City · Est. 2018</footer>
+  </main>
+</div>
+
+<script>
+/* ============================================================================
+ * CẤU HÌNH — thay 2 giá trị này sau khi triển khai xong
+ * (xem HUONG_DAN_TRIEN_KHAI.md)
+ * ==========================================================================*/
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdZTdpyWN8o2HVhs-d_8reuZc-OerKeLq-NPxqd3_HPOf7feHUGp8C0LnpB82yYZ8PKw/exec";
+const FORM_URL   = "PASTE_YOUR_GITHUB_PAGES_INDEX_HTML_URL_HERE"; // link khảo sát khách thuê (index.html)
+
+const CATEGORY_LABELS = {
+  rating_bql:'BQL hỗ trợ', rating_letan:'Lễ tân', rating_vesinh:'Vệ sinh',
+  rating_anninh:'Bảo vệ', rating_khuvucchung:'Khu vực chung', rating_hamxe:'Hầm xe',
+  rating_khonggian_anninh:'Không gian chung'
+};
+const RATING_FIELDS = Object.keys(CATEGORY_LABELS);
+const STATUS_OPTIONS = ['Chưa xử lý','Đang xử lý','Đã xử lý'];
+
+let state = { rounds: [], responses: [] };
+
+/* ---------------- API helper ---------------- */
+async function api(action, params={}){
+  const fd = new FormData();
+  fd.append('action', action);
+  fd.append('password', sessionStorage.getItem('lmak_admin_pw') || '');
+  Object.entries(params).forEach(([k,v]) => fd.append(k, v));
+  const res = await fetch(SCRIPT_URL, { method:'POST', body: fd });
+  const data = await res.json();
+  if (!data.ok && /mật khẩu/i.test(data.error || '')) doLogout();
+  return data;
+}
+
+/* ---------------- Login ---------------- */
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
+
+async function doLogin(){
+  const pw = document.getElementById('pwInput').value;
+  sessionStorage.setItem('lmak_admin_pw', pw);
+  document.getElementById('loginErr').textContent = 'Đang kiểm tra…';
+  const data = await api('adminLogin');
+  if (data.ok){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('show');
+    await refreshAll();
+  } else {
+    sessionStorage.removeItem('lmak_admin_pw');
+    document.getElementById('loginErr').textContent = 'Sai mật khẩu quản trị.';
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('lmak_admin_pw');
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+document.getElementById('logoutBtn').addEventListener('click', doLogout);
+
+/* ---------------- Data refresh ---------------- */
+async function refreshAll(){
+  const [roundsRes, responsesRes] = await Promise.all([api('listRounds'), api('listResponses')]);
+  state.rounds = roundsRes.ok ? roundsRes.rounds : [];
+  state.responses = responsesRes.ok ? responsesRes.responses : [];
+  renderStatusPill();
+  renderRoundsTable();
+  renderRoundSelects();
+  renderQr();
+  renderAll();
+}
+
+function renderStatusPill(){
+  const open = state.rounds.find(r => r.status === 'Mở');
+  const pill = document.getElementById('statusPill');
+  if (open){ pill.textContent = 'Đang mở · ' + open.round_name; pill.className = 'pill open'; }
+  else { pill.textContent = 'Không có đợt đang mở'; pill.className = 'pill closed'; }
+}
+
+/* ---------------- Rounds ---------------- */
+document.getElementById('toggleNewRound').addEventListener('click', ()=>{
+  document.getElementById('newRoundForm').classList.toggle('show');
+});
+
+document.getElementById('createRoundBtn').addEventListener('click', async ()=>{
+  const name = document.getElementById('roundNameInput').value.trim();
+  if (!name){ alert('Vui lòng nhập tên đợt khảo sát.'); return; }
+  const data = await api('createRound', {
+    round_name: name,
+    start_date: document.getElementById('roundStartInput').value,
+    end_date: document.getElementById('roundEndInput').value
+  });
+  if (!data.ok){ alert(data.error || 'Không tạo được đợt khảo sát.'); return; }
+  document.getElementById('roundNameInput').value = '';
+  document.getElementById('newRoundForm').classList.remove('show');
+  await refreshAll();
+});
+
+async function handleCloseRound(roundId){
+  if (!confirm('Đóng đợt khảo sát này? Khách thuê sẽ không thể gửi phản hồi mới cho đợt này nữa.')) return;
+  const data = await api('closeRound', { round_id: roundId });
+  if (!data.ok){ alert(data.error || 'Không đóng được đợt.'); return; }
+  await refreshAll();
+}
+
+function renderRoundsTable(){
+  const body = document.getElementById('roundsBody');
+  if (!state.rounds.length){
+    body.innerHTML = '<tr><td colspan="7" class="empty-note">Chưa có đợt khảo sát nào. Bấm "Tạo đợt mới" để bắt đầu.</td></tr>';
+    return;
+  }
+  body.innerHTML = state.rounds.map(r => `
+    <tr>
+      <td><strong>${escapeHtml(r.round_name)}</strong></td>
+      <td class="muted">${fmtDateRange(r.start_date, r.end_date)}</td>
+      <td>${r.status === 'Mở' ? '<span class="pill open">Đang mở</span>' : '<span class="pill closed">Đã đóng</span>'}</td>
+      <td>${r.response_count}</td>
+      <td>${r.avg_score ?? '—'}</td>
+      <td>${r.flagged_count}</td>
+      <td>${r.status === 'Mở' ? `<button class="btn btn-danger-outline" onclick="handleCloseRound('${r.round_id}')">Đóng đợt</button>` : ''}</td>
+    </tr>
+  `).join('');
+}
+
+function renderQr(){
+  document.getElementById('formLinkText').textContent = FORM_URL;
+  document.getElementById('qrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=6&data=' + encodeURIComponent(FORM_URL);
+}
+document.getElementById('copyLinkBtn').addEventListener('click', ()=>{
+  navigator.clipboard.writeText(FORM_URL);
+  const btn = document.getElementById('copyLinkBtn');
+  const original = btn.textContent;
+  btn.textContent = 'Đã sao chép ✓';
+  setTimeout(()=> btn.textContent = original, 1500);
+});
+
+/* ---------------- Filters ---------------- */
+function renderRoundSelects(){
+  const sel = document.getElementById('filterRound');
+  const openRound = state.rounds.find(r => r.status === 'Mở');
+  sel.innerHTML = '<option value="">Tất cả các đợt</option>' +
+    state.rounds.map(r => `<option value="${r.round_id}">${escapeHtml(r.round_name)}</option>`).join('');
+  if (openRound) sel.value = openRound.round_id;
+}
+['filterRound','filterAnon','filterFrom','filterTo'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderAll);
+});
+
+function applyFilters(){
+  const roundId = document.getElementById('filterRound').value;
+  const anon = document.getElementById('filterAnon').value;
+  const from = document.getElementById('filterFrom').value;
+  const to = document.getElementById('filterTo').value;
+  return state.responses.filter(r=>{
+    if (roundId && r.round_id !== roundId) return false;
+    if (anon === 'true' && !r.is_anonymous) return false;
+    if (anon === 'false' && r.is_anonymous) return false;
+    if (from && r.submitted_at < from) return false;
+    if (to && r.submitted_at > to + 'T23:59:59') return false;
+    return true;
+  });
+}
+
+/* ---------------- Render everything driven by filters ---------------- */
+function renderAll(){
+  const filtered = applyFilters();
+  renderKpis(filtered);
+  renderBarChart(filtered);
+  renderLineChart();
+  renderFlagged(filtered.filter(r=>r.is_flagged));
+  renderAllResponses(filtered);
+}
+
+function renderKpis(filtered){
+  const avg = filtered.length ? (filtered.reduce((s,r)=>s+Number(r.overall_score||0),0)/filtered.length).toFixed(1) : '—';
+  const flaggedCount = filtered.filter(r=>r.is_flagged).length;
+  document.getElementById('kpiRow').innerHTML = `
+    <div class="kpi-card"><div class="num">${filtered.length}</div><div class="lbl">Phản hồi (theo bộ lọc)</div></div>
+    <div class="kpi-card"><div class="num">${avg}</div><div class="lbl">Điểm trung bình</div></div>
+    <div class="kpi-card"><div class="num">${flaggedCount}</div><div class="lbl">Cần theo dõi</div></div>
+  `;
+}
+
+/* ---------------- Charts (SVG thuần, không dùng thư viện ngoài) ---------------- */
+function renderBarChart(filtered){
+  const el = document.getElementById('barChart');
+  if (!filtered.length){ el.innerHTML = '<p class="empty-note">Chưa có dữ liệu phù hợp bộ lọc.</p>'; return; }
+  const W=420, H=220, padL=110, padB=24, barGap=8;
+  const barH = (H-padB-10)/RATING_FIELDS.length - barGap;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+  RATING_FIELDS.forEach((f,i)=>{
+    const vals = filtered.map(r=>Number(r[f])).filter(v=>!isNaN(v));
+    const avg = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
+    const y = 10 + i*(barH+barGap);
+    const w = (W-padL-20) * (avg/5);
+    svg += `<text x="${padL-10}" y="${y+barH/2+4}" text-anchor="end" font-size="11" fill="#5B412A" font-family="Montserrat">${CATEGORY_LABELS[f]}</text>`;
+    svg += `<rect x="${padL}" y="${y}" width="${W-padL-20}" height="${barH}" fill="#E8D5A8"/>`;
+    svg += `<rect x="${padL}" y="${y}" width="${w}" height="${barH}" fill="#997045"/>`;
+    svg += `<text x="${padL+w+6}" y="${y+barH/2+4}" font-size="11" fill="#2C2A26" font-family="Montserrat">${avg.toFixed(1)}</text>`;
+  });
+  svg += `</svg>`;
+  el.innerHTML = svg;
+}
+
+function renderLineChart(){
+  const el = document.getElementById('lineChart');
+  const rounds = [...state.rounds].filter(r=>r.avg_score!=null).reverse(); // chronological
+  if (rounds.length < 1){ el.innerHTML = '<p class="empty-note">Chưa có đủ dữ liệu để hiển thị xu hướng.</p>'; return; }
+  const W=420, H=220, padL=30, padR=16, padT=14, padB=34;
+  const stepX = rounds.length>1 ? (W-padL-padR)/(rounds.length-1) : 0;
+  const yFor = v => padT + (5-v)/5*(H-padT-padB);
+  let points = rounds.map((r,i)=> [padL + i*stepX, yFor(r.avg_score)]);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+  [1,2,3,4,5].forEach(v=>{
+    const y = yFor(v);
+    svg += `<line x1="${padL}" x2="${W-padR}" y1="${y}" y2="${y}" stroke="#D6D2C8" stroke-width="1"/>`;
+    svg += `<text x="4" y="${y+3}" font-size="9" fill="#8E624B" font-family="Montserrat">${v}</text>`;
+  });
+  if (points.length>1){
+    svg += `<polyline points="${points.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#997045" stroke-width="2"/>`;
+  }
+  points.forEach((p,i)=>{
+    svg += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#5B412A"/>`;
+    svg += `<text x="${p[0]}" y="${H-14}" font-size="9" text-anchor="middle" fill="#5B412A" font-family="Montserrat">${escapeHtml(shorten(rounds[i].round_name,8))}</text>`;
+  });
+  svg += `</svg>`;
+  el.innerHTML = svg;
+}
+
+/* ---------------- Flagged & all responses tables ---------------- */
+function renderFlagged(rows){
+  const body = document.getElementById('flaggedBody');
+  if (!rows.length){ body.innerHTML = '<tr><td colspan="6" class="empty-note">Không có phản hồi nào cần theo dõi theo bộ lọc hiện tại.</td></tr>'; return; }
+  body.innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.response_id}</td>
+      <td class="muted">${fmtDate(r.submitted_at)}</td>
+      <td>${escapeHtml(r.round_name)}</td>
+      <td>${responderLabel(r)}</td>
+      <td><span class="flag-chip"></span>${r.overall_score}</td>
+      <td>
+        <select class="status-select" onchange="handleStatusChange('${r.response_id}', this.value)">
+          ${STATUS_OPTIONS.map(s=>`<option value="${s}" ${s===r.processed_status?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function handleStatusChange(responseId, status){
+  const data = await api('updateStatus', { response_id: responseId, status });
+  if (!data.ok){ alert(data.error || 'Không cập nhật được trạng thái.'); return; }
+  const r = state.responses.find(x=>x.response_id===responseId);
+  if (r) r.processed_status = status;
+}
+
+function renderAllResponses(rows){
+  const body = document.getElementById('allBody');
+  if (!rows.length){ body.innerHTML = '<tr><td colspan="6" class="empty-note">Không có phản hồi nào theo bộ lọc hiện tại.</td></tr>'; return; }
+  body.innerHTML = rows.slice(0,150).map(r => `
+    <tr>
+      <td>${r.response_id}</td>
+      <td class="muted">${fmtDate(r.submitted_at)}</td>
+      <td>${escapeHtml(r.round_name)}</td>
+      <td>${responderLabel(r)}</td>
+      <td>${r.is_flagged ? '<span class="flag-chip"></span>' : ''}${r.overall_score}</td>
+      <td class="muted">${escapeHtml(shorten(r.feedback_text || '—', 60))}</td>
+    </tr>
+  `).join('');
+}
+
+/* ---------------- Helpers ---------------- */
+function responderLabel(r){
+  if (r.is_anonymous) return '<span class="muted">Ẩn danh</span>';
+  const parts = [r.company_name, r.room_number].filter(Boolean);
+  return parts.length ? escapeHtml(parts.join(' · ')) : '<span class="muted">—</span>';
+}
+function fmtDate(iso){ if(!iso) return '—'; return String(iso).slice(0,10); }
+function fmtDateRange(a,b){ if(!a && !b) return '—'; return `${a||'?'} → ${b||'?'}`; }
+function shorten(s,n){ s=String(s); return s.length>n ? s.slice(0,n)+'…' : s; }
+function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+</script>
+</body>
+</html>

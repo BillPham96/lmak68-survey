@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Khảo sát chất lượng dịch vụ — L'MAK 68</title>
+<meta name="description" content="Khảo sát chất lượng dịch vụ tòa nhà L'MAK 68">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#997045; --bronze:#8E624B; --espresso:#5B412A;
+    --champagne:#C9A86A; --sand:#E8D5A8; --ivory:#F5EBD7;
+    --navy:#1F2D3D; --pearl:#FAFAF7; --stone:#D6D2C8; --charcoal:#2C2A26;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--pearl);
+    color:var(--charcoal);
+    font-family:'Montserrat',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:480px;
+    margin:0 auto;
+    padding:28px 22px 48px;
+    min-height:100vh;
+    position:relative;
+  }
+  /* corner mark — chữ ký thương hiệu */
+  .corner{
+    position:absolute; top:22px; left:22px;
+    width:22px; height:22px;
+    border-top:1.5px solid var(--gold);
+    border-left:1.5px solid var(--gold);
+  }
+  header{padding-top:18px; margin-bottom:26px;}
+  .wordmark{
+    font-weight:800; font-size:13px; letter-spacing:0.28em;
+    color:var(--espresso); text-transform:uppercase;
+    margin:0 0 10px 30px;
+  }
+  .lede{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic; font-weight:500;
+    font-size:21px; line-height:1.4;
+    color:var(--bronze);
+    margin:0 0 22px 30px;
+  }
+  .meta-row{
+    display:flex; gap:18px; margin:0 0 4px 30px;
+    border-top:1px solid var(--stone); padding-top:14px;
+  }
+  .meta-item .k{
+    font-size:10px; letter-spacing:0.14em; color:var(--bronze);
+    text-transform:uppercase; margin-bottom:3px;
+  }
+  .meta-item .v{font-size:14px; font-weight:600; color:var(--charcoal);}
+
+  .progress-track{
+    height:2px; background:var(--stone); margin:26px 0 6px; border-radius:2px; overflow:hidden;
+  }
+  .progress-fill{height:100%; width:0%; background:var(--gold); transition:width .3s ease;}
+  .progress-label{font-size:11.5px; color:var(--bronze); letter-spacing:0.03em;}
+
+  fieldset{border:0; padding:0; margin:22px 0 0;}
+  .anon-row{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:14px 16px; background:var(--ivory); border-radius:2px; margin-top:22px;
+  }
+  .anon-row input{margin-top:3px; accent-color:var(--gold); width:16px; height:16px;}
+  .anon-row label{font-size:13.5px; line-height:1.5;}
+  .id-fields{display:grid; gap:12px; margin-top:14px; overflow:hidden; transition:max-height .25s ease, opacity .25s ease;}
+  .id-fields.hidden{max-height:0; opacity:0; margin-top:0;}
+  .field label{display:block; font-size:11.5px; color:var(--bronze); letter-spacing:0.04em; margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%; border:1px solid var(--stone); background:var(--pearl);
+    padding:11px 12px; font-family:inherit; font-size:14.5px; color:var(--charcoal);
+    border-radius:2px;
+  }
+  .field input:focus, .field textarea:focus{outline:none; border-color:var(--gold);}
+
+  .question{margin-top:30px; padding-top:20px; border-top:1px solid var(--stone);}
+  .question:first-of-type{border-top:none; margin-top:24px; padding-top:0;}
+  .q-text{font-size:15px; line-height:1.5; color:var(--charcoal); margin:0 0 13px; font-weight:500;}
+  .stars{display:flex; gap:4px;}
+  .star-btn{
+    background:none; border:none; padding:4px; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .star-btn svg{width:34px; height:34px; display:block;}
+  .star-btn .stroke{stroke:var(--stone); stroke-width:1.4; fill:none; transition:fill .15s, stroke .15s;}
+  .star-btn.filled .stroke{fill:var(--gold); stroke:var(--gold);}
+
+  .feedback-wrap{margin-top:30px; padding-top:20px; border-top:1px solid var(--stone);}
+  .feedback-wrap label{display:block; font-size:15px; font-weight:500; margin-bottom:4px;}
+  .feedback-hint{font-size:12px; color:var(--bronze); margin-bottom:12px;}
+  textarea{min-height:100px; resize:vertical;}
+  .counter{text-align:right; font-size:11px; color:var(--stone); margin-top:5px;}
+
+  .submit-btn{
+    width:100%; margin-top:30px; padding:16px; border:none; border-radius:2px;
+    background:var(--espresso); color:var(--ivory); font-family:inherit;
+    font-weight:700; font-size:14px; letter-spacing:0.08em; text-transform:uppercase;
+    cursor:pointer; transition:background .2s;
+  }
+  .submit-btn:disabled{background:var(--stone); color:#fff; cursor:not-allowed;}
+  .submit-btn:not(:disabled):active{background:var(--bronze);}
+
+  .error-msg{
+    margin-top:14px; font-size:13px; color:#8a3b2b; background:#f6e6e0;
+    padding:10px 12px; border-radius:2px; display:none;
+  }
+  .error-msg.show{display:block;}
+
+  .footer-brand{
+    margin-top:40px; text-align:center; font-size:10px; letter-spacing:0.16em;
+    color:var(--stone); text-transform:uppercase;
+  }
+
+  /* Trạng thái toàn màn hình: đang tải / đóng đợt / cảm ơn */
+  .state-screen{
+    display:none; min-height:80vh; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:20px;
+  }
+  .state-screen.show{display:flex;}
+  .state-screen svg{width:52px; height:52px; margin-bottom:22px;}
+  .state-title{
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-weight:500;
+    font-size:26px; color:var(--espresso); margin:0 0 10px;
+  }
+  .state-sub{font-size:14px; color:var(--bronze); max-width:300px; line-height:1.6;}
+
+  #formScreen{display:none;}
+  #formScreen.show{display:block;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="corner"></div>
+
+  <!-- Đang tải -->
+  <div id="loadingScreen" class="state-screen show">
+    <div class="state-sub">Đang tải khảo sát…</div>
+  </div>
+
+  <!-- Đợt khảo sát đã đóng / lỗi kết nối -->
+  <div id="closedScreen" class="state-screen">
+    <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="#C9A86A" stroke-width="1.4"/><path d="M17 26h18" stroke="#997045" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <p class="state-title" id="closedTitle">Đợt khảo sát đã kết thúc</p>
+    <p class="state-sub" id="closedSub">Cảm ơn Anh/Chị đã quan tâm. Ban Quản Lý sẽ mở đợt khảo sát tiếp theo trong thời gian tới.</p>
+  </div>
+
+  <!-- Cảm ơn -->
+  <div id="thankyouScreen" class="state-screen">
+    <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="#997045" stroke-width="1.4"/><path d="M16 27l7 7 13-15" fill="none" stroke="#997045" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p class="state-title">Cảm ơn Anh/Chị đã dành thời gian</p>
+    <p class="state-sub">Ý kiến của Anh/Chị đã được ghi nhận và sẽ giúp Ban Quản Lý cải thiện dịch vụ tại tòa nhà.</p>
+  </div>
+
+  <!-- Form khảo sát -->
+  <div id="formScreen">
+    <header>
+      <p class="wordmark">L'MAK 68</p>
+      <p class="lede">Ý kiến của Anh/Chị giúp chúng tôi hoàn thiện dịch vụ mỗi ngày.</p>
+      <div class="meta-row">
+        <div class="meta-item">
+          <div class="k">Tòa nhà</div>
+          <div class="v" id="buildingName">L'MAK 68</div>
+        </div>
+        <div class="meta-item">
+          <div class="k">Đợt khảo sát</div>
+          <div class="v" id="roundName">—</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label"><span id="progressCount">0</span>/7 hạng mục đã đánh giá</div>
+
+    <form id="surveyForm">
+      <div class="anon-row">
+        <input type="checkbox" id="isAnonymous">
+        <label for="isAnonymous">Tôi muốn gửi phản hồi ẩn danh</label>
+      </div>
+
+      <div class="id-fields" id="idFields">
+        <div class="field">
+          <label for="companyName">Tên công ty (nếu Anh/Chị muốn chia sẻ)</label>
+          <input type="text" id="companyName" maxlength="100" placeholder="VD: Công ty ABC">
+        </div>
+        <div class="field">
+          <label for="roomNumber">Số phòng / tầng (nếu Anh/Chị muốn chia sẻ)</label>
+          <input type="text" id="roomNumber" maxlength="100" placeholder="VD: Tầng 5 - P.503">
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="feedback-wrap">
+        <label for="feedbackText">Góp ý thêm cho Ban Quản Lý</label>
+        <p class="feedback-hint">Điều gì BQL có thể làm tốt hơn để trải nghiệm của Anh/Chị thuận tiện và thoải mái hơn? (không bắt buộc)</p>
+        <textarea id="feedbackText" maxlength="1000" placeholder="Anh/Chị có góp ý gì để BQL cải thiện dịch vụ?"></textarea>
+        <div class="counter"><span id="feedbackCount">0</span>/1000</div>
+      </div>
+
+      <div class="error-msg" id="errorMsg"></div>
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>Gửi phản hồi</button>
+    </form>
+
+    <p class="footer-brand">L'MAK Investment Corporation · Ho Chi Minh City</p>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+ * CẤU HÌNH — thay SCRIPT_URL bằng URL Web App Apps Script sau khi triển khai
+ * (xem HUONG_DAN_TRIEN_KHAI.md, bước "Deploy Apps Script")
+ * ==========================================================================*/
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdZTdpyWN8o2HVhs-d_8reuZc-OerKeLq-NPxqd3_HPOf7feHUGp8C0LnpB82yYZ8PKw/exec";
+
+const QUESTIONS = [
+  { field: 'rating_bql', text: "Anh/Chị cảm nhận thế nào về sự hỗ trợ và thái độ phục vụ của Ban Quản lý?" },
+  { field: 'rating_letan', text: "Anh/Chị hài lòng thế nào với sự thân thiện và hỗ trợ của nhân viên lễ tân?" },
+  { field: 'rating_vesinh', text: "Anh/Chị đánh giá thế nào về mức độ sạch sẽ tại các khu vực chung, toilet và sảnh?" },
+  { field: 'rating_anninh', text: "Anh/Chị cảm thấy thế nào về công tác bảo vệ và kiểm soát ra vào?" },
+  { field: 'rating_khuvucchung', text: "Anh/Chị đánh giá thế nào về sự tiện nghi và tình trạng của hành lang, sảnh, thang máy?" },
+  { field: 'rating_hamxe', text: "Anh/Chị hài lòng thế nào với hầm xe / khu vực đỗ xe?" },
+  { field: 'rating_khonggian_anninh', text: "Nhìn chung, Anh/Chị cảm thấy thế nào về không gian và sự an tâm khi làm việc tại tòa nhà?" }
+];
+
+const STAR_SVG = '<svg viewBox="0 0 24 24"><path class="stroke" d="M12 2.5l2.85 6.32 6.65.6-5.02 4.72 1.5 6.86L12 17.7l-6-3.7 1.5-6.86-5.02-4.72 6.65-.6z"/></svg>';
+
+const state = { ratings: {}, roundId: null, roundName: null };
+
+function showScreen(id){
+  ['loadingScreen','closedScreen','thankyouScreen'].forEach(s=>{
+    document.getElementById(s).classList.toggle('show', s===id);
+  });
+  document.getElementById('formScreen').classList.toggle('show', id==='formScreen');
+}
+
+function buildQuestions(){
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="question">
+      <p class="q-text">${i+1}. ${q.text}</p>
+      <div class="stars" data-field="${q.field}">
+        ${[1,2,3,4,5].map(v=>`<button type="button" class="star-btn" data-value="${v}" aria-label="${v} sao">${STAR_SVG}</button>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.stars').forEach(group=>{
+    const field = group.dataset.field;
+    group.querySelectorAll('.star-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const value = parseInt(btn.dataset.value,10);
+        state.ratings[field] = value;
+        group.querySelectorAll('.star-btn').forEach(b=>{
+          b.classList.toggle('filled', parseInt(b.dataset.value,10) <= value);
+        });
+        updateProgress();
+      });
+    });
+  });
+}
+
+function updateProgress(){
+  const answered = Object.keys(state.ratings).length;
+  document.getElementById('progressCount').textContent = answered;
+  document.getElementById('progressFill').style.width = (answered/7*100)+'%';
+  document.getElementById('submitBtn').disabled = answered < 7;
+}
+
+function initAnonymousToggle(){
+  const checkbox = document.getElementById('isAnonymous');
+  const idFields = document.getElementById('idFields');
+  checkbox.addEventListener('change', ()=>{
+    idFields.classList.toggle('hidden', checkbox.checked);
+    if (checkbox.checked){
+      document.getElementById('companyName').value='';
+      document.getElementById('roomNumber').value='';
+    }
+  });
+}
+
+function initFeedbackCounter(){
+  const ta = document.getElementById('feedbackText');
+  const counter = document.getElementById('feedbackCount');
+  ta.addEventListener('input', ()=> counter.textContent = ta.value.length);
+}
+
+function showError(msg){
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function clearError(){
+  document.getElementById('errorMsg').classList.remove('show');
+}
+
+async function loadActiveRound(){
+  try{
+    const res = await fetch(SCRIPT_URL + '?action=getActiveRound');
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Lỗi không xác định');
+
+    if (!data.open){
+      document.getElementById('closedTitle').textContent = 'Đợt khảo sát đã kết thúc';
+      showScreen('closedScreen');
+      return;
+    }
+
+    // đã gửi phản hồi cho đợt này trong phiên này rồi?
+    const submittedKey = 'lmak68_submitted_' + data.round_id;
+    if (localStorage.getItem(submittedKey)){
+      showScreen('thankyouScreen');
+      return;
+    }
+
+    state.roundId = data.round_id;
+    state.roundName = data.round_name;
+    document.getElementById('buildingName').textContent = data.building_name;
+    document.getElementById('roundName').textContent = data.round_name;
+    showScreen('formScreen');
+  }catch(err){
+    document.getElementById('closedTitle').textContent = 'Không thể tải khảo sát';
+    document.getElementById('closedSub').textContent = 'Vui lòng kiểm tra kết nối mạng và thử quét lại mã QR. (' + err.message + ')';
+    showScreen('closedScreen');
+  }
+}
+
+async function handleSubmit(e){
+  e.preventDefault();
+  clearError();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi…';
+
+  const fd = new FormData();
+  fd.append('action', 'submitResponse');
+  fd.append('is_anonymous', document.getElementById('isAnonymous').checked ? 'true' : 'false');
+  fd.append('company_name', document.getElementById('companyName').value);
+  fd.append('room_number', document.getElementById('roomNumber').value);
+  fd.append('feedback_text', document.getElementById('feedbackText').value);
+  QUESTIONS.forEach(q => fd.append(q.field, state.ratings[q.field] || ''));
+
+  try{
+    const res = await fetch(SCRIPT_URL, { method:'POST', body: fd });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Gửi phản hồi thất bại.');
+    localStorage.setItem('lmak68_submitted_' + state.roundId, '1');
+    showScreen('thankyouScreen');
+  }catch(err){
+    showError(err.message);
+    btn.disabled = false;
+    btn.textContent = 'Gửi phản hồi';
+  }
+}
+
+buildQuestions();
+initAnonymousToggle();
+initFeedbackCounter();
+document.getElementById('surveyForm').addEventListener('submit', handleSubmit);
+loadActiveRound();
+</script>
+</body>
+</html>
