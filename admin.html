@@ -73,7 +73,10 @@
   .new-round-form label{font-size:10.5px; color:var(--bronze); text-transform:uppercase; letter-spacing:0.05em;}
   .new-round-form input{padding:9px 10px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:13px;}
 
-  .qr-box{display:flex; gap:20px; align-items:center; padding:18px; background:var(--ivory); border-radius:2px; margin-top:16px; flex-wrap:wrap;}
+  .qr-brand{display:flex; align-items:center; gap:10px; margin-top:18px;}
+  .qr-brand-icon{width:28px; height:auto; display:block;}
+  .qr-brand-text{font-weight:800; font-size:15px; letter-spacing:0.12em; color:var(--espresso); text-transform:uppercase;}
+  .qr-box{display:flex; gap:20px; align-items:center; padding:18px; background:var(--ivory); border-radius:2px; margin-top:10px; flex-wrap:wrap;}
   .qr-box img{width:120px; height:120px; background:#fff; border-radius:2px;}
   .qr-box .link-text{font-size:12.5px; color:var(--bronze); word-break:break-all; max-width:360px;}
   .qr-box .copy-btn{margin-top:8px;}
@@ -146,6 +149,10 @@
         </table>
       </div>
 
+      <div class="qr-brand">
+        <img src="lmak68-mark.png" alt="" class="qr-brand-icon">
+        <span class="qr-brand-text">L'MAK 68</span>
+      </div>
       <div class="qr-box">
         <img id="qrImg" alt="QR liên kết khảo sát">
         <div>
@@ -390,6 +397,7 @@ function renderKpis(filtered){
     <div class="kpi-card"><div class="num">${flaggedCount}</div><div class="lbl">Cần theo dõi</div></div>
   `;
 }
+
 /* ---------------- Charts (SVG thuần, không dùng thư viện ngoài) ---------------- */
 function renderBarChart(filtered){
   const el = document.getElementById('barChart');
