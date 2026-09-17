@@ -97,7 +97,8 @@
 
   .feedback-wrap{margin-top:30px; padding-top:20px; border-top:1px solid var(--stone);}
   .feedback-wrap label{display:block; font-size:15px; font-weight:500; margin-bottom:4px;}
-  .feedback-hint{font-size:12px; color:var(--bronze); line-height:1.5; margin-bottom:12px;}
+  .feedback-hint{font-size:12px; color:var(--bronze); line-height:1.5; margin:0 0 3px;}
+  .feedback-hint-en{font-size:11px; font-style:italic; color:var(--stone); line-height:1.5; margin:0 0 12px;}
   .feedback-wrap textarea{
     display:block; width:100%; min-height:110px; resize:vertical;
     border:1px solid var(--stone); background:var(--pearl);
@@ -253,6 +254,7 @@
       <div class="feedback-wrap">
         <label for="feedbackText">Góp ý thêm cho Ban Quản Lý</label>
         <p class="feedback-hint">Điều gì BQL có thể làm tốt hơn để trải nghiệm của Anh/Chị thuận tiện và thoải mái hơn? (không bắt buộc)</p>
+        <p class="feedback-hint-en">What could the Management Board do better to make your experience more convenient and comfortable? (optional)</p>
         <textarea id="feedbackText" maxlength="1000" placeholder="Anh/Chị có góp ý gì để BQL cải thiện dịch vụ?"></textarea>
         <div class="counter"><span id="feedbackCount">0</span>/1000</div>
       </div>
