@@ -18,14 +18,35 @@
   a{color:var(--gold);}
 
   /* ---------- Login ---------- */
-  #loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;}
-  .login-card{width:100%; max-width:340px; text-align:center;}
-  .login-card .corner{width:20px; height:20px; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); margin:0 auto 18px;}
+  #loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:linear-gradient(180deg, var(--pearl) 0%, var(--ivory) 100%);}
+  .login-card{width:100%; max-width:360px;}
+  .login-panel{
+    background:#fff; border:1px solid var(--stone); border-radius:6px;
+    padding:44px 38px 36px; text-align:center;
+    box-shadow:0 4px 28px rgba(91,65,42,.10), 0 1px 4px rgba(91,65,42,.06);
+  }
+  .login-card .corner{width:22px; height:22px; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); margin:0 auto 20px;}
   .login-card h1{font-size:13px; letter-spacing:0.28em; text-transform:uppercase; color:var(--espresso); margin:0 0 6px;}
-  .login-card p.sub{font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--bronze); font-size:18px; margin:0 0 28px;}
-  .login-card input{width:100%; padding:13px 14px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:14px; margin-bottom:12px;}
-  .login-card button{width:100%; padding:14px; border:none; background:var(--espresso); color:var(--ivory); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:13px; border-radius:2px; cursor:pointer;}
-  .login-err{color:#8a3b2b; font-size:12.5px; margin-top:10px; min-height:16px;}
+  .login-card p.sub{font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--bronze); font-size:18px; margin:0 0 30px;}
+  .login-card input{
+    display:block; width:100%; padding:13px 15px; border:1px solid var(--stone);
+    background:var(--pearl); border-radius:4px; font-family:inherit; font-size:14px;
+    color:var(--charcoal); margin-bottom:14px; transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .login-card input::placeholder{color:#B8AA92;}
+  .login-card input:focus{
+    outline:none; border-color:var(--gold); background:#fff;
+    box-shadow:0 2px 10px rgba(91,65,42,.08), 0 0 0 3px rgba(153,112,69,.12);
+  }
+  .login-card button{
+    width:100%; padding:14px; border:none; background:var(--espresso); color:var(--ivory);
+    font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:13px;
+    border-radius:4px; cursor:pointer; transition:background .2s ease, transform .05s ease;
+  }
+  .login-card button:hover{background:var(--gold);}
+  .login-card button:active{transform:translateY(1px);}
+  .login-foot{margin-top:24px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--stone); text-align:center;}
+  .login-err{color:#8a3b2b; font-size:12.5px; margin-top:14px; min-height:16px;}
 
   /* ---------- Shell ---------- */
   #app{display:none;}
@@ -49,14 +70,23 @@
   .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px;}
   .section-head h2{font-size:14px; letter-spacing:0.1em; text-transform:uppercase; color:var(--espresso); margin:0;}
 
-  .btn{padding:10px 18px; border-radius:2px; border:none; font-family:inherit; font-size:12.5px; font-weight:700; letter-spacing:0.05em; cursor:pointer;}
+  .btn{padding:10px 18px; border-radius:2px; border:none; font-family:inherit; font-size:12.5px; font-weight:700; letter-spacing:0.05em; cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease;}
   .btn-primary{background:var(--gold); color:var(--pearl);}
+  .btn-primary:hover{background:var(--bronze);}
   .btn-outline{background:none; border:1px solid var(--stone); color:var(--charcoal);}
+  .btn-outline:hover{border-color:var(--gold); color:var(--espresso);}
   .btn-danger-outline{background:none; border:1px solid var(--stone); color:var(--bronze);}
+  .btn-danger-outline:hover{border-color:#b5493a; color:#b5493a;}
+  .btn-link{background:none; border:none; padding:0; font-family:inherit; font-size:12px; color:var(--gold); cursor:pointer; font-weight:600; transition:color .2s ease;}
+  .btn-link:hover{color:var(--espresso); text-decoration:underline;}
+  .btn-link.danger{color:#b5493a;}
+  .btn-link.danger:hover{color:#8a3020;}
+  .row-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
 
   /* KPI cards */
   .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:30px;}
-  .kpi-card{background:var(--ivory); padding:18px 20px; border-radius:2px;}
+  .kpi-card{background:var(--ivory); padding:18px 20px; border-radius:4px; box-shadow:0 2px 10px rgba(91,65,42,.06); transition:box-shadow .2s ease;}
+  .kpi-card:hover{box-shadow:0 3px 14px rgba(91,65,42,.10);}
   .kpi-card .num{font-size:28px; font-weight:700; color:var(--espresso);}
   .kpi-card .lbl{font-size:11px; letter-spacing:0.06em; color:var(--bronze); text-transform:uppercase; margin-top:4px;}
 
@@ -65,37 +95,71 @@
   th{text-align:left; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--bronze); padding:10px 12px; border-bottom:1px solid var(--stone);}
   td{padding:11px 12px; border-bottom:1px solid var(--stone); vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
-  .card{background:#fff; border:1px solid var(--stone); border-radius:2px;}
+  tbody tr{transition:background .15s ease;}
+  tbody tr:hover td{background:var(--pearl);}
+  #flaggedBody tr, #allBody tr{cursor:pointer;}
+  .card{background:#fff; border:1px solid var(--stone); border-radius:4px; box-shadow:0 2px 10px rgba(91,65,42,.05);}
 
-  .new-round-form{display:none; gap:10px; padding:16px; background:var(--ivory); border-radius:2px; margin-bottom:16px; flex-wrap:wrap; align-items:flex-end;}
+  .new-round-form{display:none; gap:10px; padding:16px; background:var(--ivory); border-radius:4px; margin-bottom:16px; flex-wrap:wrap; align-items:flex-end;}
   .new-round-form.show{display:flex;}
-  .new-round-form .field{display:flex; flex-direction:column; gap:5px;}
-  .new-round-form label{font-size:10.5px; color:var(--bronze); text-transform:uppercase; letter-spacing:0.05em;}
-  .new-round-form input{padding:9px 10px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:13px;}
+  .new-round-form .field, .edit-round-row .field{display:flex; flex-direction:column; gap:5px;}
+  .new-round-form label, .edit-round-row label{font-size:10.5px; color:var(--bronze); text-transform:uppercase; letter-spacing:0.05em;}
+  .new-round-form input, .edit-round-row input{
+    padding:9px 10px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:13px;
+    background:#fff; transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .new-round-form input:focus, .edit-round-row input:focus{
+    outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(153,112,69,.10);
+  }
+  .edit-round-row{display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; padding:14px; background:var(--ivory); border-radius:4px;}
+  .pw-msg{font-size:12.5px; margin-top:10px; min-height:16px;}
+  .pw-msg.ok{color:#3c6b45;}
+  .pw-msg.err{color:#8a3b2b;}
+  .section-hint{font-size:11px; color:var(--stone); font-weight:400; text-transform:none; letter-spacing:0;}
 
   .qr-brand{display:flex; align-items:center; gap:10px; margin-top:18px;}
   .qr-brand-icon{width:28px; height:auto; display:block;}
   .qr-brand-text{font-weight:800; font-size:15px; letter-spacing:0.12em; color:var(--espresso); text-transform:uppercase;}
-  .qr-box{display:flex; gap:20px; align-items:center; padding:18px; background:var(--ivory); border-radius:2px; margin-top:10px; flex-wrap:wrap;}
+  .qr-box{display:flex; gap:20px; align-items:center; padding:18px; background:var(--ivory); border-radius:4px; margin-top:10px; flex-wrap:wrap; box-shadow:0 2px 10px rgba(91,65,42,.05);}
   .qr-box img{width:120px; height:120px; background:#fff; border-radius:2px;}
   .qr-box .link-text{font-size:12.5px; color:var(--bronze); word-break:break-all; max-width:360px;}
   .qr-box .copy-btn{margin-top:8px;}
 
   /* Filters */
   .filters{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
-  .filters select, .filters input{padding:9px 11px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12.5px; background:#fff;}
+  .filters select, .filters input{
+    padding:9px 11px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12.5px; background:#fff;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .filters select:focus, .filters input:focus{
+    outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(153,112,69,.10);
+  }
 
   /* Charts */
   .chart-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
   @media (max-width:800px){ .chart-row{grid-template-columns:1fr;} }
-  .chart-card{background:#fff; border:1px solid var(--stone); border-radius:2px; padding:20px;}
+  .chart-card{background:#fff; border:1px solid var(--stone); border-radius:4px; padding:20px; box-shadow:0 2px 10px rgba(91,65,42,.05);}
   .chart-card h3{font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--bronze); margin:0 0 16px;}
 
-  .status-select{padding:6px 8px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12px; background:#fff;}
+  .status-select{padding:6px 8px; border:1px solid var(--stone); border-radius:2px; font-family:inherit; font-size:12px; background:#fff; transition:border-color .2s ease;}
+  .status-select:focus{outline:none; border-color:var(--gold);}
   .flag-chip{display:inline-block; width:7px; height:7px; border-radius:50%; background:#b5493a; margin-right:6px;}
   .muted{color:var(--stone);}
   .empty-note{padding:24px; text-align:center; color:var(--bronze); font-size:13px;}
   footer.brandfoot{text-align:center; font-size:10px; letter-spacing:0.16em; color:var(--stone); text-transform:uppercase; padding:30px 0;}
+
+  /* ---------- Response detail modal ---------- */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(44,42,38,.45); align-items:center; justify-content:center; padding:20px; z-index:100;}
+  .modal-overlay.show{display:flex;}
+  .modal-card{background:#fff; border-radius:6px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; position:relative; box-shadow:0 10px 40px rgba(44,42,38,.25);}
+  .modal-close{position:absolute; top:16px; right:18px; background:none; border:none; font-size:18px; color:var(--stone); cursor:pointer; line-height:1;}
+  .modal-close:hover{color:var(--charcoal);}
+  .modal-card h3{font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--espresso); margin:0 0 4px;}
+  .modal-card .modal-sub{font-size:12px; color:var(--bronze); margin:0 0 20px;}
+  .modal-ratings{display:grid; grid-template-columns:1fr 1fr; gap:10px 20px; margin-bottom:22px;}
+  .modal-ratings div{font-size:12.5px; display:flex; justify-content:space-between; border-bottom:1px dotted var(--stone); padding-bottom:4px;}
+  .modal-label{font-size:11px; letter-spacing:.06em; color:var(--bronze); text-transform:uppercase; margin-bottom:8px;}
+  .modal-feedback{background:var(--ivory); border-radius:4px; padding:16px; font-size:13.5px; line-height:1.6; white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -103,12 +167,15 @@
 <!-- ================= LOGIN ================= -->
 <div id="loginScreen">
   <div class="login-card">
-    <div class="corner"></div>
-    <h1>L'MAK 68 — Quản trị</h1>
-    <p class="sub">Khảo sát chất lượng dịch vụ</p>
-    <input type="password" id="pwInput" placeholder="Mật khẩu quản trị" autocomplete="current-password">
-    <button id="loginBtn">Đăng nhập</button>
-    <div class="login-err" id="loginErr"></div>
+    <div class="login-panel">
+      <div class="corner"></div>
+      <h1>L'MAK 68 — Quản trị</h1>
+      <p class="sub">Khảo sát chất lượng dịch vụ</p>
+      <input type="password" id="pwInput" placeholder="Mật khẩu quản trị" autocomplete="current-password">
+      <button id="loginBtn">Đăng nhập</button>
+      <div class="login-err" id="loginErr"></div>
+    </div>
+    <div class="login-foot">L'MAK Investment Corporation</div>
   </div>
 </div>
 
@@ -206,7 +273,10 @@
 
     <!-- TẤT CẢ PHẢN HỒI -->
     <section>
-      <div class="section-head"><h2>Tất cả phản hồi (theo bộ lọc)</h2></div>
+      <div class="section-head">
+        <h2>Tất cả phản hồi (theo bộ lọc) <span class="section-hint">— bấm vào một dòng để xem chi tiết</span></h2>
+        <button class="btn btn-outline" id="exportCsvBtn">Xuất CSV</button>
+      </div>
       <div class="card">
         <table>
           <thead><tr><th>Mã</th><th>Ngày gửi</th><th>Đợt</th><th>Người trả lời</th><th>Điểm TB</th><th>Góp ý</th></tr></thead>
@@ -215,8 +285,31 @@
       </div>
     </section>
 
+    <!-- CÀI ĐẶT -->
+    <section>
+      <div class="section-head">
+        <h2>Cài đặt</h2>
+        <button class="btn btn-outline" id="toggleChangePw">Đổi mật khẩu</button>
+      </div>
+      <div class="new-round-form" id="changePwForm">
+        <div class="field"><label>Mật khẩu hiện tại</label><input type="password" id="curPwInput" autocomplete="current-password"></div>
+        <div class="field"><label>Mật khẩu mới</label><input type="password" id="newPwInput" autocomplete="new-password"></div>
+        <div class="field"><label>Nhập lại mật khẩu mới</label><input type="password" id="newPwInput2" autocomplete="new-password"></div>
+        <button class="btn btn-primary" id="savePwBtn">Lưu mật khẩu mới</button>
+      </div>
+      <div class="pw-msg" id="pwMsg"></div>
+    </section>
+
     <footer class="brandfoot">L'MAK Investment Corporation · Ho Chi Minh City · Est. 2018</footer>
   </main>
+</div>
+
+<!-- ================= RESPONSE DETAIL MODAL ================= -->
+<div id="respModal" class="modal-overlay">
+  <div class="modal-card">
+    <button class="modal-close" id="respModalClose">&#10005;</button>
+    <div id="respModalBody"></div>
+  </div>
 </div>
 
 <script>
@@ -236,6 +329,7 @@ const RATING_FIELDS = Object.keys(CATEGORY_LABELS);
 const STATUS_OPTIONS = ['Chưa xử lý','Đang xử lý','Đã xử lý'];
 
 let state = { rounds: [], responses: [] };
+let editingRoundId = null;
 
 /* ---------------- API helper ---------------- */
 async function api(action, params={}){
@@ -320,13 +414,64 @@ async function handleCloseRound(roundId){
   await refreshAll();
 }
 
+async function handleReopenRound(roundId){
+  if (!confirm('Mở lại đợt khảo sát này? Đợt đang mở khác (nếu có) sẽ tự động đóng.')) return;
+  const data = await api('reopenRound', { round_id: roundId });
+  if (!data.ok){ alert(data.error || 'Không mở lại được đợt.'); return; }
+  await refreshAll();
+}
+
+async function handleDeleteRound(roundId){
+  if (!confirm('Xoá đợt khảo sát này? Thao tác không thể hoàn tác.')) return;
+  const data = await api('deleteRound', { round_id: roundId });
+  if (!data.ok){ alert(data.error || 'Không xoá được đợt.'); return; }
+  await refreshAll();
+}
+
+function handleEditRound(roundId){
+  editingRoundId = roundId;
+  renderRoundsTable();
+}
+
+function handleCancelEditRound(){
+  editingRoundId = null;
+  renderRoundsTable();
+}
+
+async function handleSaveRound(roundId){
+  const name = document.getElementById('editName_' + roundId).value.trim();
+  if (!name){ alert('Vui lòng nhập tên đợt khảo sát.'); return; }
+  const start = document.getElementById('editStart_' + roundId).value;
+  const end = document.getElementById('editEnd_' + roundId).value;
+  const data = await api('updateRound', { round_id: roundId, round_name: name, start_date: start, end_date: end });
+  if (!data.ok){ alert(data.error || 'Không lưu được thay đổi.'); return; }
+  editingRoundId = null;
+  await refreshAll();
+}
+
 function renderRoundsTable(){
   const body = document.getElementById('roundsBody');
   if (!state.rounds.length){
     body.innerHTML = '<tr><td colspan="7" class="empty-note">Chưa có đợt khảo sát nào. Bấm "Tạo đợt mới" để bắt đầu.</td></tr>';
     return;
   }
-  body.innerHTML = state.rounds.map(r => `
+  body.innerHTML = state.rounds.map(r => {
+    if (r.round_id === editingRoundId){
+      return `
+        <tr>
+          <td colspan="7">
+            <div class="edit-round-row">
+              <div class="field"><label>Tên đợt</label><input type="text" id="editName_${r.round_id}" value="${escapeHtml(r.round_name)}"></div>
+              <div class="field"><label>Bắt đầu</label><input type="date" id="editStart_${r.round_id}" value="${r.start_date || ''}"></div>
+              <div class="field"><label>Kết thúc</label><input type="date" id="editEnd_${r.round_id}" value="${r.end_date || ''}"></div>
+              <button class="btn btn-primary" onclick="handleSaveRound('${r.round_id}')">Lưu</button>
+              <button class="btn btn-outline" onclick="handleCancelEditRound()">Huỷ</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+    return `
     <tr>
       <td><strong>${escapeHtml(r.round_name)}</strong></td>
       <td class="muted">${fmtDateRange(r.start_date, r.end_date)}</td>
@@ -334,9 +479,18 @@ function renderRoundsTable(){
       <td>${r.response_count}</td>
       <td>${r.avg_score ?? '—'}</td>
       <td>${r.flagged_count}</td>
-      <td>${r.status === 'Mở' ? `<button class="btn btn-danger-outline" onclick="handleCloseRound('${r.round_id}')">Đóng đợt</button>` : ''}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn-link" onclick="handleEditRound('${r.round_id}')">Sửa</button>
+          ${r.status === 'Mở'
+            ? `<button class="btn-link" onclick="handleCloseRound('${r.round_id}')">Đóng đợt</button>`
+            : `<button class="btn-link" onclick="handleReopenRound('${r.round_id}')">Mở lại</button>`}
+          ${r.response_count === 0 ? `<button class="btn-link danger" onclick="handleDeleteRound('${r.round_id}')">Xoá</button>` : ''}
+        </div>
+      </td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function renderQr(){
@@ -449,13 +603,13 @@ function renderFlagged(rows){
   const body = document.getElementById('flaggedBody');
   if (!rows.length){ body.innerHTML = '<tr><td colspan="6" class="empty-note">Không có phản hồi nào cần theo dõi theo bộ lọc hiện tại.</td></tr>'; return; }
   body.innerHTML = rows.map(r => `
-    <tr>
+    <tr onclick="showResponseDetail('${r.response_id}')">
       <td>${r.response_id}</td>
       <td class="muted">${fmtDate(r.submitted_at)}</td>
       <td>${escapeHtml(r.round_name)}</td>
       <td>${responderLabel(r)}</td>
       <td><span class="flag-chip"></span>${r.overall_score}</td>
-      <td>
+      <td onclick="event.stopPropagation()">
         <select class="status-select" onchange="handleStatusChange('${r.response_id}', this.value)">
           ${STATUS_OPTIONS.map(s=>`<option value="${s}" ${s===r.processed_status?'selected':''}>${s}</option>`).join('')}
         </select>
@@ -475,7 +629,7 @@ function renderAllResponses(rows){
   const body = document.getElementById('allBody');
   if (!rows.length){ body.innerHTML = '<tr><td colspan="6" class="empty-note">Không có phản hồi nào theo bộ lọc hiện tại.</td></tr>'; return; }
   body.innerHTML = rows.slice(0,150).map(r => `
-    <tr>
+    <tr onclick="showResponseDetail('${r.response_id}')">
       <td>${r.response_id}</td>
       <td class="muted">${fmtDate(r.submitted_at)}</td>
       <td>${escapeHtml(r.round_name)}</td>
@@ -485,6 +639,88 @@ function renderAllResponses(rows){
     </tr>
   `).join('');
 }
+
+/* ---------------- Response detail modal ---------------- */
+function showResponseDetail(responseId){
+  const r = state.responses.find(x=>x.response_id===responseId);
+  if (!r) return;
+  const ratingsHtml = RATING_FIELDS.map(f=>`<div><span>${CATEGORY_LABELS[f]}</span><strong>${r[f]} ★</strong></div>`).join('');
+  document.getElementById('respModalBody').innerHTML = `
+    <h3>Phản hồi ${r.response_id}</h3>
+    <p class="modal-sub">${fmtDate(r.submitted_at)} · ${escapeHtml(r.round_name)} · ${responderLabel(r)}</p>
+    <div class="modal-ratings">${ratingsHtml}</div>
+    <div class="modal-label">Góp ý thêm</div>
+    <div class="modal-feedback">${r.feedback_text ? escapeHtml(r.feedback_text) : '<span class="muted">Không có góp ý.</span>'}</div>
+  `;
+  document.getElementById('respModal').classList.add('show');
+}
+document.getElementById('respModalClose').addEventListener('click', ()=>{
+  document.getElementById('respModal').classList.remove('show');
+});
+document.getElementById('respModal').addEventListener('click', (e)=>{
+  if (e.target.id === 'respModal') document.getElementById('respModal').classList.remove('show');
+});
+
+/* ---------------- CSV export ---------------- */
+document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+
+function exportCsv(){
+  const filtered = applyFilters();
+  if (!filtered.length){ alert('Không có dữ liệu để xuất theo bộ lọc hiện tại.'); return; }
+  const headers = ['Mã','Ngày gửi','Đợt','Người trả lời','Ẩn danh', ...RATING_FIELDS.map(f=>CATEGORY_LABELS[f]), 'Điểm TB','Cần theo dõi','Trạng thái xử lý','Góp ý'];
+  const rows = filtered.map(r => [
+    r.response_id, fmtDate(r.submitted_at), r.round_name,
+    r.is_anonymous ? 'Ẩn danh' : [r.company_name, r.room_number].filter(Boolean).join(' · '),
+    r.is_anonymous ? 'Có' : 'Không',
+    ...RATING_FIELDS.map(f=>r[f]),
+    r.overall_score, r.is_flagged ? 'Có' : 'Không', r.processed_status || '', r.feedback_text || ''
+  ]);
+  const csvLines = [headers, ...rows].map(row => row.map(csvEscape).join(',')).join('\r\n');
+  const blob = new Blob(['﻿' + csvLines], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'lmak68-phanhoi-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function csvEscape(v){
+  const s = String(v ?? '');
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
+  return s;
+}
+
+/* ---------------- Change admin password ---------------- */
+document.getElementById('toggleChangePw').addEventListener('click', ()=>{
+  document.getElementById('changePwForm').classList.toggle('show');
+  const msg = document.getElementById('pwMsg');
+  msg.textContent = '';
+  msg.className = 'pw-msg';
+});
+
+document.getElementById('savePwBtn').addEventListener('click', async ()=>{
+  const cur = document.getElementById('curPwInput').value;
+  const n1 = document.getElementById('newPwInput').value;
+  const n2 = document.getElementById('newPwInput2').value;
+  const msg = document.getElementById('pwMsg');
+  if (!cur || !n1){ msg.textContent = 'Vui lòng nhập đầy đủ mật khẩu.'; msg.className='pw-msg err'; return; }
+  if (n1 !== n2){ msg.textContent = 'Mật khẩu mới nhập lại không khớp.'; msg.className='pw-msg err'; return; }
+  if (n1.length < 4){ msg.textContent = 'Mật khẩu mới phải có ít nhất 4 ký tự.'; msg.className='pw-msg err'; return; }
+  const curStored = sessionStorage.getItem('lmak_admin_pw') || '';
+  if (cur !== curStored){ msg.textContent = 'Mật khẩu hiện tại không đúng.'; msg.className='pw-msg err'; return; }
+  const data = await api('changeAdminPassword', { new_password: n1 });
+  if (!data.ok){ msg.textContent = data.error || 'Không đổi được mật khẩu.'; msg.className='pw-msg err'; return; }
+  sessionStorage.setItem('lmak_admin_pw', n1);
+  document.getElementById('curPwInput').value = '';
+  document.getElementById('newPwInput').value = '';
+  document.getElementById('newPwInput2').value = '';
+  document.getElementById('changePwForm').classList.remove('show');
+  msg.textContent = 'Đã đổi mật khẩu thành công.';
+  msg.className = 'pw-msg ok';
+});
 
 /* ---------------- Helpers ---------------- */
 function responderLabel(r){
