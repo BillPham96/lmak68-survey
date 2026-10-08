@@ -176,14 +176,14 @@
   <div id="closedScreen" class="state-screen">
     <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="#C9A86A" stroke-width="1.4"/><path d="M17 26h18" stroke="#997045" stroke-width="1.6" stroke-linecap="round"/></svg>
     <p class="state-title" id="closedTitle">Đợt khảo sát đã kết thúc</p>
-    <p class="state-sub" id="closedSub">Cảm ơn Anh/Chị đã quan tâm. Ban Quản Lý sẽ mở đợt khảo sát tiếp theo trong thời gian tới.</p>
+    <p class="state-sub" id="closedSub">Cảm ơn bạn đã quan tâm. Ban Quản Lý sẽ mở đợt khảo sát tiếp theo trong thời gian tới.</p>
   </div>
 
   <!-- Cảm ơn -->
   <div id="thankyouScreen" class="state-screen">
     <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="#997045" stroke-width="1.4"/><path d="M16 27l7 7 13-15" fill="none" stroke="#997045" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <p class="state-title">Cảm ơn Anh/Chị đã dành thời gian</p>
-    <p class="state-sub">Ý kiến của Anh/Chị đã được ghi nhận và sẽ giúp Ban Quản Lý cải thiện dịch vụ tại tòa nhà.</p>
+    <p class="state-title">Cảm ơn bạn đã dành thời gian</p>
+    <p class="state-sub">Ý kiến của bạn đã được ghi nhận và sẽ giúp Ban Quản Lý cải thiện dịch vụ tại tòa nhà.</p>
   </div>
 
   <!-- Chào mừng -->
@@ -191,7 +191,7 @@
     <img src="lmak68-mark.png" alt="L'MAK 68" class="welcome-icon">
     <p class="welcome-wordmark">L'MAK 68</p>
     <p class="welcome-subtitle">Khảo sát chất lượng dịch vụ</p>
-    <p class="welcome-tagline">Ý kiến của Anh/Chị giúp chúng tôi hoàn thiện dịch vụ mỗi ngày.</p>
+    <p class="welcome-tagline">Hôm nay của bạn như thế nào?</p>
     <div class="welcome-meta">
       <div class="meta-item">
         <div class="k">Tòa nhà</div>
@@ -205,7 +205,7 @@
 
     <div class="welcome-qr-box">
       <img id="welcomeQrImg" alt="QR khảo sát" class="welcome-qr-img">
-      <p class="welcome-qr-caption">Quét mã QR bằng điện thoại của Anh/Chị để làm khảo sát ngay</p>
+      <p class="welcome-qr-caption">Quét mã QR bằng điện thoại của bạn để làm khảo sát ngay</p>
     </div>
     <p class="welcome-divider">— hoặc —</p>
 
@@ -216,7 +216,7 @@
   <div id="formScreen">
     <header>
       <p class="wordmark">L'MAK 68</p>
-      <p class="lede">Ý kiến của Anh/Chị giúp chúng tôi hoàn thiện dịch vụ mỗi ngày.</p>
+      <p class="lede">Hôm nay của bạn như thế nào?</p>
       <div class="meta-row">
         <div class="meta-item">
           <div class="k">Tòa nhà</div>
@@ -240,11 +240,11 @@
 
       <div class="id-fields" id="idFields">
         <div class="field">
-          <label for="companyName">Tên công ty (nếu Anh/Chị muốn chia sẻ)</label>
+          <label for="companyName">Tên công ty (nếu bạn muốn chia sẻ)</label>
           <input type="text" id="companyName" maxlength="100" placeholder="VD: Công ty ABC">
         </div>
         <div class="field">
-          <label for="roomNumber">Số phòng / tầng (nếu Anh/Chị muốn chia sẻ)</label>
+          <label for="roomNumber">Số phòng / tầng (nếu bạn muốn chia sẻ)</label>
           <input type="text" id="roomNumber" maxlength="100" placeholder="VD: Tầng 5 - P.503">
         </div>
       </div>
@@ -253,9 +253,9 @@
 
       <div class="feedback-wrap">
         <label for="feedbackText">Góp ý thêm cho Ban Quản Lý</label>
-        <p class="feedback-hint">Điều gì BQL có thể làm tốt hơn để trải nghiệm của Anh/Chị thuận tiện và thoải mái hơn? (không bắt buộc)</p>
+        <p class="feedback-hint">Điều gì BQL có thể làm tốt hơn để trải nghiệm của bạn thuận tiện và thoải mái hơn? (không bắt buộc)</p>
         <p class="feedback-hint-en">What could the Management Board do better to make your experience more convenient and comfortable? (optional)</p>
-        <textarea id="feedbackText" maxlength="1000" placeholder="Anh/Chị có góp ý gì để BQL cải thiện dịch vụ?"></textarea>
+        <textarea id="feedbackText" maxlength="1000" placeholder="Bạn có góp ý gì để BQL cải thiện dịch vụ?"></textarea>
         <div class="counter"><span id="feedbackCount">0</span>/1000</div>
       </div>
 
@@ -275,13 +275,13 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdZTdpyWN8o2HVhs-d_8reuZc-OerKeLq-NPxqd3_HPOf7feHUGp8C0LnpB82yYZ8PKw/exec";
 
 const QUESTIONS = [
-  { field: 'rating_bql', text: "Anh/Chị cảm nhận thế nào về sự hỗ trợ và thái độ phục vụ của Ban Quản lý?" },
-  { field: 'rating_letan', text: "Anh/Chị hài lòng thế nào với sự thân thiện và hỗ trợ của nhân viên lễ tân?" },
-  { field: 'rating_vesinh', text: "Anh/Chị đánh giá thế nào về mức độ sạch sẽ tại các khu vực chung, toilet và sảnh?" },
-  { field: 'rating_anninh', text: "Anh/Chị cảm thấy thế nào về công tác bảo vệ và kiểm soát ra vào?" },
-  { field: 'rating_khuvucchung', text: "Anh/Chị đánh giá thế nào về sự tiện nghi và tình trạng của hành lang, sảnh, thang máy?" },
-  { field: 'rating_hamxe', text: "Anh/Chị hài lòng thế nào với hầm xe / khu vực đỗ xe?" },
-  { field: 'rating_khonggian_anninh', text: "Nhìn chung, Anh/Chị cảm thấy thế nào về không gian và sự an tâm khi làm việc tại tòa nhà?" }
+  { field: 'rating_bql', text: "Bạn cảm nhận thế nào về sự hỗ trợ và thái độ phục vụ của Ban Quản lý?" },
+  { field: 'rating_letan', text: "Bạn hài lòng thế nào với sự thân thiện và hỗ trợ của nhân viên lễ tân?" },
+  { field: 'rating_vesinh', text: "Bạn đánh giá thế nào về mức độ sạch sẽ tại các khu vực chung, toilet và sảnh?" },
+  { field: 'rating_anninh', text: "Bạn cảm thấy thế nào về công tác bảo vệ và kiểm soát ra vào?" },
+  { field: 'rating_khuvucchung', text: "Bạn đánh giá thế nào về sự tiện nghi và tình trạng của hành lang, sảnh, thang máy?" },
+  { field: 'rating_hamxe', text: "Bạn hài lòng thế nào với hầm xe / khu vực đỗ xe?" },
+  { field: 'rating_khonggian_anninh', text: "Nhìn chung, bạn cảm thấy thế nào về không gian và sự an tâm khi làm việc tại tòa nhà?" }
 ];
 
 const STAR_SVG = '<svg viewBox="0 0 24 24"><path class="stroke" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
